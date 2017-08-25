@@ -10,11 +10,6 @@ _TYPE_FISCALE_ = 'fiscale'
 _TYPE_FATTURA_ = 'fattura'
 _counter_ = {}
 
-def test():
-    s = DocumentoSpesa.Receipt(cfCittadino='asd', numDocumento='qwe', dataEmissione='foo')
-    s.addSpesa("AD", 123)
-    print(s)
-
 def parse(path):
     receipts = []
 
