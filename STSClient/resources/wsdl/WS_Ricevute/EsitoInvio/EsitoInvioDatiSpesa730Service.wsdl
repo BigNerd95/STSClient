@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="EsitoInvioDatiSpesa730Service" targetNamespace="http://esitoinvio.p730.sanita.sogei.it/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://esitoinvio.p730.sanita.sogei.it/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://esitoinvio.p730.sanita.sogei.it/" schemaLocation="EsitoInvioDatiSpesa730Service_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="Exception_Exception">
+    <part name="fault" element="tns:Exception">
+    </part>
+  </message>
+  <message name="EsitoInvii">
+    <part name="parameters" element="tns:EsitoInvii">
+    </part>
+  </message>
+  <message name="EsitoInviiResponse">
+    <part name="parameters" element="tns:EsitoInviiResponse">
+    </part>
+  </message>
+  <portType name="EsitoInvioDatiSpesa730">
+    <operation name="EsitoInvii">
+      <input message="tns:EsitoInvii">
+    </input>
+      <output message="tns:EsitoInviiResponse">
+    </output>
+      <fault name="Exception_Exception" message="tns:Exception_Exception">
+    </fault>
+    </operation>
+  </portType>
+  <binding name="EsitoInvioDatiSpesa730PortBinding" type="tns:EsitoInvioDatiSpesa730">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="EsitoInvii">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="Exception_Exception">
+        <soap:fault name="Exception_Exception" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="EsitoInvioDatiSpesa730Service">
+    <port name="EsitoInvioDatiSpesa730Port" binding="tns:EsitoInvioDatiSpesa730PortBinding">
+      <soap:address location="http://localhost:9083/EsitoStatoInviiWEB/EsitoInvioDatiSpesa730Service"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 	name="DettaglioErrori730Service" 
+     targetNamespace="http://dettaglioerrori.p730.sanita.sogei.it/" 
+               xmlns="http://schemas.xmlsoap.org/wsdl/" 
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+           xmlns:tns="http://dettaglioerrori.p730.sanita.sogei.it/" 
+           xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://dettaglioerrori.p730.sanita.sogei.it/" schemaLocation="DettaglioErrori730Service_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  
+  <message name="DettaglioErrori">
+    <part name="parameters" element="tns:DettaglioErrori">
+    </part>
+  </message>
+  <message name="DettaglioErroriResponse">
+    <part name="parameters" element="tns:DettaglioErroriResponse">
+    </part>
+  </message>
+  <portType name="DettaglioErrori730">
+    <operation name="DettaglioErrori">
+      <input message="tns:DettaglioErrori">
+    </input>
+      <output message="tns:DettaglioErroriResponse">
+    </output>      
+    </operation>
+  </portType>
+  <binding name="DettaglioErrori730PortBinding" type="tns:DettaglioErrori730">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="DettaglioErrori">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>     
+    </operation>
+  </binding>
+  <service name="DettaglioErrori730Service">
+    <port name="DettaglioErrori730Port" binding="tns:DettaglioErrori730PortBinding">
+      <soap:address location="http://localhost:9083/EsitoStatoInviiWEB/DettaglioErrori730Service"/>
+    </port>
+  </service>
+</definitions>

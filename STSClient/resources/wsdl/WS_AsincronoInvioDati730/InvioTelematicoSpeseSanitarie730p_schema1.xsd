@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://ejb.invioTelematicoSS730p.sanita.finanze.it/"
+	version="1.0" xmlns:tns="http://ejb.invioTelematicoSS730p.sanita.finanze.it/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="inviaFileMtom" type="tns:inviaFileMtom" />
+
+	<xs:element name="inviaFileMtomResponse" type="tns:inviaFileMtomResponse" />
+
+	<xs:complexType name="ricevutaInvio">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="codiceEsito" type="xs:string" />
+			<xs:element minOccurs="1" name="dataAccoglienza" type="xs:string" />
+			<xs:element minOccurs="1" name="descrizioneEsito" type="xs:string" />
+			<xs:element minOccurs="1" name="dimensioneFileAllegato"	type="xs:string" />
+			<xs:element minOccurs="1" name="nomeFileAllegato" type="xs:string" />
+			<xs:element minOccurs="1" name="protocollo" type="xs:string" />
+			<xs:element minOccurs="0" name="idErrore" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="inviaFileMtom">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="nomeFileAllegato"	nillable="false" type="tns:tipoNomeFileAllegato" />
+			<xs:element minOccurs="1" maxOccurs="1" name="pincodeInvianteCifrato" nillable="false" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="datiProprietario"	nillable="false" type="tns:proprietario" />
+			<xs:element minOccurs="0" name="opzionale1" type="xs:string" />
+			<xs:element minOccurs="0" name="opzionale2" type="xs:string" />
+			<xs:element minOccurs="0" name="opzionale3" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="1" name="documento" nillable="false" type="xs:base64Binary" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="proprietario">
+		<xs:sequence>
+			<xs:element name="codiceRegione" type="tns:varChar3Type"
+				minOccurs="0" />
+			<xs:element name="codiceAsl" type="tns:varChar3Type"
+				minOccurs="0" />
+			<xs:element name="codiceSSA" type="tns:codSsaType"
+				minOccurs="0" />
+			<xs:element name="cfProprietario" type="tns:cfType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:simpleType name="cfType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="varChar3Type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Z0-9]{3})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="codSsaType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Z0-9]{5,6})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoNomeFileAllegato">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\p{IsBasicLatin}{6,60})" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="inviaFileMtomResponse">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="return" type="tns:ricevutaInvio" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ricevutapdf.p730.sanita.sogei.it/" version="1.0" targetNamespace="http://ricevutapdf.p730.sanita.sogei.it/">
+
+  <xs:element name="RicevutaPdf" type="tns:RicevutaPdf"></xs:element>
+
+  <xs:element name="RicevutaPdfResponse" type="tns:RicevutaPdfResponse"></xs:element>
+
+  <xs:element name="datiInput" type="tns:datiInput"></xs:element>
+
+  <xs:element name="datiOutput" type="tns:datiOutput"></xs:element>
+
+  <xs:complexType name="dettaglioEsitoNegativo">
+    <xs:sequence>
+      <xs:element name="codice" type="xs:string"></xs:element>
+      <xs:element name="descrizione" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dettaglioEsitoPositivo"> 
+    <xs:sequence>
+     <xs:element name="pdf" type="xs:base64Binary"/>
+    </xs:sequence>                 
+  </xs:complexType>
+
+  <xs:complexType name="datiOutput">
+    <xs:sequence>
+      <xs:element name="esitoChiamata" type="xs:string"></xs:element>      
+      <xs:element name="esitiPositivi" type="tns:esitiPositivi" minOccurs="0"></xs:element>
+      <xs:element name="esitiNegativi" type="tns:esitiNegativi" minOccurs="0"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="esitiPositivi">
+    <xs:sequence>
+      <xs:element name="dettagliEsito" type="tns:dettaglioEsitoPositivo" ></xs:element>
+    </xs:sequence>
+   
+  </xs:complexType>
+
+  <xs:complexType name="esitiNegativi">
+    <xs:sequence>
+      <xs:element name="dettaglioEsitoNegativo" type="tns:dettaglioEsitoNegativo" maxOccurs="unbounded"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="datiInput">
+    <xs:sequence>
+      <xs:element name="pinCode" type="xs:string"></xs:element>            
+      <xs:element name="protocollo" type="xs:string" minOccurs="0"></xs:element>
+      <xs:element name="opzionale1" type="xs:string" minOccurs="0"></xs:element>
+      <xs:element name="opzionale2" type="xs:string" minOccurs="0"></xs:element>
+      <xs:element name="opzionale3" type="xs:string" minOccurs="0"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RicevutaPdfResponse">
+    <xs:sequence>
+      <xs:element name="DatiOutputRichiesta" type="tns:datiOutput" minOccurs="0"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RicevutaPdf">
+    <xs:sequence>
+      <xs:element name="DatiInputRichiesta" type="tns:datiInput" minOccurs="0"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
