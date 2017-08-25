@@ -28,7 +28,7 @@ def writeFile(path, data):
     pdf_file.write(data)
     pdf_file.close()
 
-def send(user, password, pincode, cfInviante, pIva, cufficio, receipts_structure, files_path, test):
+def send(user, password, pincode, cfInviante, pIva, cufficio, module, files_path, test):
     # estrae info da codice ufficio
     (cregione, casl, cssa) = cufficio.split('-')
 
@@ -37,7 +37,7 @@ def send(user, password, pincode, cfInviante, pIva, cufficio, receipts_structure
 
     print('\nParsing receipts')
     # carica modulo selezionato e parsa scontrini
-    documentiSpesa = ModuleManager.importStructure(receipts_structure).parse(files_path)
+    documentiSpesa = ModuleManager.importStructure(module).parse(files_path)
 
     # genera file XML
     doc730 = Precompilata.Schema730(cregione, casl, cssa, pIva, cfInviante)
@@ -111,18 +111,18 @@ def parse_cli():
     parser = ArgumentParser(description='** Sistema Tessera Sanitaria Client **')
     subparser = parser.add_subparsers(dest='subparser_name')
 
-    cliParser = subparser.add_parser('cli', help='Starts program from command line interface')
+    cliParser = subparser.add_parser('send', help='Starts program from command line interface')
     cliParser.add_argument('-u', '--username', required=True, metavar='A9AZOS61', help='Username of Sistema Tessera Sanitaria')
     cliParser.add_argument('-p', '--password', required=True, metavar='Salve123', help='Password of Sistema Tessera Sanitaria')
     cliParser.add_argument('-pc', '--pincode', required=True, metavar='5485370458', help='Pincode of Sistema Tessera Sanitaria')
     cliParser.add_argument('-cf', '--codice-fiscale', required=True, metavar='PROVAX00X00X000Y', help='Your codice fiscale')
     cliParser.add_argument('-pi', '--partita-iva', required=True, metavar='98765432104', help='Your partita iva')
     cliParser.add_argument('-cu', '--codice-ufficio', required=True, metavar='604-120-010011', help='Codice ufficio')
-    cliParser.add_argument('-rs', '--receipts-structure', required=True, choices=ModuleManager.listStructures(), help='Structure of receipts to parse')
+    cliParser.add_argument('-m', '--module', required=True, choices=ModuleManager.listStructures(), help='Structure module of receipts to parse')
     cliParser.add_argument('-f', '--files-path', required=True, help='Directory path containing month folders of receipts')
 
     testParser = subparser.add_parser('test', help='Send receipts using test server')
-    testParser.add_argument('-rs', '--receipts-structure', required=True, choices=ModuleManager.listStructures(), help='Structure of receipts to parse')
+    testParser.add_argument('-m', '--module', required=True, choices=ModuleManager.listStructures(), help='Structure module of receipts to parse')
     testParser.add_argument('-f', '--files-path', required=True, help='Directory path containing month folders of receipts')
 
     args = parser.parse_args()
@@ -133,7 +133,7 @@ def parse_cli():
     	return None
 
 
-def check_send(username, password, pincode, codice_fiscale, partita_iva, codice_ufficio, receipts_structure, files_path, test):
+def check_send(username, password, pincode, codice_fiscale, partita_iva, codice_ufficio, module, files_path, test):
 
 	if (test):
 		print("Using TEST server")
@@ -147,7 +147,7 @@ def check_send(username, password, pincode, codice_fiscale, partita_iva, codice_
 	print("\tCF:", codice_fiscale)
 	print("\tPIVA:", partita_iva)
 	print("\tCU:", codice_ufficio)
-	print("\tStructure:", receipts_structure)
+	print("\tModule:", module)
 	print("\tFiles path:", files_path)
 
 	print("\nContinue? (yes|no): ", end='')
@@ -160,7 +160,7 @@ def check_send(username, password, pincode, codice_fiscale, partita_iva, codice_
 			cfInviante = codice_fiscale,
 			pIva = partita_iva,
 			cufficio = codice_ufficio,
-			receipts_structure = receipts_structure,
+			module = module,
 			files_path = files_path,
 			test = test
 		)
@@ -189,7 +189,7 @@ def main():
 				codice_fiscale = args.codice_fiscale,
 				partita_iva = args.partita_iva,
 				codice_ufficio = args.codice_ufficio,
-				receipts_structure = args.receipts_structure,
+				module = args.module,
 				files_path = args.files_path,
 				test = False
 			)
@@ -202,7 +202,7 @@ def main():
 				codice_fiscale = 'PROVAX00X00X000Y',
 				partita_iva = '98765432104',
 				codice_ufficio = '604-120-010011',
-				receipts_structure = args.receipts_structure,
+				module = args.module,
 				files_path = args.files_path,
 				test = True
 			)

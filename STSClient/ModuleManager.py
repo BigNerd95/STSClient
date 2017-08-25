@@ -33,7 +33,7 @@ def parse_cli():
 
     testParser = subparser.add_parser('test', help='Test a module')
     testParser.add_argument('-m', '--module', required=True, help='Module name')
-    testParser.add_argument('-p', '--path', required=True, help='File(s) path')
+    testParser.add_argument('-f', '--file_path', required=True, help='File(s) path')
     testParser.add_argument('-v', '--verbose', action='store_true', help='Show all parsed receipts')
 
     args = parser.parse_args()
