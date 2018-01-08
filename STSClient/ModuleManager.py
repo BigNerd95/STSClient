@@ -33,7 +33,7 @@ def parse_cli():
 
     testParser = subparser.add_parser('test', help='Test a module')
     testParser.add_argument('-m', '--module', required=True, help='Module name')
-    testParser.add_argument('-f', '--file_path', required=True, help='File(s) path')
+    testParser.add_argument('-f', '--files_path', required=True, help='File(s) path')
     testParser.add_argument('-v', '--verbose', action='store_true', help='Show all parsed receipts')
 
     args = parser.parse_args()
@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
         elif args.subparser_name == 'test':
             module = importStructure(args.module)
-            receipts = module.parse(args.path)
+            receipts = module.parse(args.files_path)
             print('Count: ' + str(len(receipts)))
             if args.verbose:
                 for r in receipts:
