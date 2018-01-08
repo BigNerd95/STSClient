@@ -181,7 +181,7 @@ def check_send(username, password, pincode, codice_fiscale, partita_iva, codice_
 def main():
 	args = parse_cli()
 	if args:
-		if args.subparser_name == 'cli':
+		if args.subparser_name == 'send':
 			check_send(
 				username = args.username,
 				password = args.password,

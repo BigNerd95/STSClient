@@ -21,7 +21,7 @@ class Receipt():
         if float(importo) > 0.0:
             self._spese.append({'tipo': str(tipo), 'importo': str(importo)})
         else:
-            print("WARNING: amount 0! Not added")
+            print("ATTENZIONE: importo 0! Non aggiunto allo scontrino.", self._dataEmissione, self._cfCittadino)
             #print(importo)
 
     def toXML(self, crypter, pIva):
