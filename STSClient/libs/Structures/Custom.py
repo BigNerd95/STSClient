@@ -70,7 +70,8 @@ def __parse_amounts__(scontrino, data):
             break
         else:
             amount = line.split()[-1].replace(',', '.') # replace colon with dot, to convert it to float
-            scontrino.addSpesa('AD', amount)
+            if "." in amount:   # fix invalid amount (OPERATORE 007)
+                scontrino.addSpesa('AD', amount)
 
 def __get_cf__(data):
     cf_line = re.search("C\.F\.\/P\.IVA: ([A-Z0-9]{16})", data)
