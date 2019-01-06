@@ -23,4 +23,7 @@ Per testare il proprio modulo:
 `./ModuleManager.py test -m NOME_MODULO -f FILES_PATH_SCONTRINI -v`
 
 ## Specifiche
-Per consultare le specifiche ufficiali si veda il sito [SistemaTS]( http://sistemats1.sanita.finanze.it/wps/content/Portale_Tessera_Sanitaria/STS_Sanita/Home/Sistema+TS+informa/730+-+Spese+Sanitarie/730+-+Spese+Sanitarie+-+Documenti+di+progetto+e+specifiche+tecniche/)
+Per consultare le specifiche ufficiali si vedano gli [strumenti per lo sviluppo](https://sistemats1.sanita.finanze.it/portale/spese-sanitarie/documenti-e-specifiche-tecniche-strumenti-per-lo-sviluppo)
+
+## Login
+Per visualizzare tutte le ricevute o cambiare la password accedere al [SistemaTS](https://sistemats4.sanita.finanze.it/simossHome/)
