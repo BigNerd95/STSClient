@@ -31,7 +31,10 @@ def __parse_file__(file_path):
     fiscal_receipts = []
     for receipt in data.split('t_'):    # ogni scontrino inizia con 't_'
         if 'C.F.' in receipt:           # solo gli scontrini fiscali contengono 'C.F.'
-            fiscal_receipts.append(__parse_receipt__(receipt))
+            new_receipt = __parse_receipt__(receipt)
+            if len(new_receipt._spese) > 0:     # controlla che ci sia almeno una spesa in questo scontrino
+                fiscal_receipts.append(new_receipt)
+    
     return fiscal_receipts
 
 # parse the structure of a single receipt

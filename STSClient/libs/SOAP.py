@@ -37,6 +37,7 @@ class Client():
 
         pincodeInvianteCifrato = crypter.b64encrypt(pincode)
 
+        # se va in errore qui, aggiorna zeep
         resInvio = self.invio.inviaFileMtom(
     			nomeFileAllegato = file_name + '.zip',
     			pincodeInvianteCifrato = pincodeInvianteCifrato,
