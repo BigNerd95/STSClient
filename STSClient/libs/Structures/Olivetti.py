@@ -3,6 +3,14 @@
 # License: AGPL 3
 # Author: Lorenzo Santina (BigNerd95)
 
+"""
+TODO 2021:
+    - pagamentoTracciato (NON obbligatorio per spese AD)
+    - flagOpposizione
+    - tipoDocumento
+    - viceSpesa --> AliquotaIva
+"""
+
 from .. import DocumentoSpesa
 import glob
 
@@ -24,13 +32,18 @@ def __get_paths__(path):
 
 def __parse_file__(file_path):
     # read file content
-    fd = open(file_path, 'rt')
+    fd = open(file_path, 'rt', encoding='iso-8859-1')
     data = fd.read()
     fd.close()
 
     fiscal_receipts = []
     for receipt in data.split('t_'):    # ogni scontrino inizia con 't_'
         if 'C.F.' in receipt:           # solo gli scontrini fiscali contengono 'C.F.'
+            
+            if 'RETTIFICA' in receipt:
+                print("ATTENZIONE: rettifica, scontrino ignorato")
+                continue
+            
             new_receipt = __parse_receipt__(receipt)
             if len(new_receipt._spese) > 0:     # controlla che ci sia almeno una spesa in questo scontrino
                 fiscal_receipts.append(new_receipt)
@@ -72,18 +85,30 @@ def __parse_header__(lines):
 
 # return the CF field contained in a receipt
 def __get_cf__(lines):
-    cfline = [line for line in lines if line.startswith('C.F.')]
+    cfline = [line for line in lines if 'C.F.' in line]
     if cfline:
-        return cfline[0].split()[1] #or None
+        return cfline[0].split()[-1] #or None
     else:
         return None
 
 # parse a receipt structure (type 'fiscale')
 def __parse_fiscale__(scontrino, lines):
 
-    for line in lines[2:]:
+    start_line = 0
+    for index, line in enumerate(lines):
+        if line.startswith('DESCRIZIONE'):
+            start_line = index + 1
+            break
+        elif 'EURO' in line:
+            start_line = index + 1
+            break
+
+    for line in lines[start_line:]:
         if line.startswith('TOTALE'):
             break
+        elif ',' not in line:
+            print("ATTENZIONE: manca la virgola, cerco nella riga seguente", line)
+            continue
         else:
             amount = line.split()[-1].replace(',', '.') # replace colon with dot, to convert it to float
             scontrino.addSpesa('AD', amount)
