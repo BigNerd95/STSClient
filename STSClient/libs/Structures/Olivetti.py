@@ -67,9 +67,11 @@ def __parse_receipt__(data):
     scontrino = DocumentoSpesa.Receipt(cfCittadino=info_cf, numDocumento=info_id, dataEmissione=info_date)
 
     if rtype == _TYPE_FISCALE_:
+        scontrino._tipoDocumento = 'D'
         __parse_fiscale__(scontrino, lines)
 
     elif rtype == _TYPE_FATTURA_:
+        scontrino._tipoDocumento = 'F'
         __parse_fattura__(scontrino, lines)
 
     return scontrino
@@ -111,7 +113,12 @@ def __parse_fiscale__(scontrino, lines):
             continue
         else:
             amount = line.split()[-1].replace(',', '.') # replace colon with dot, to convert it to float
-            scontrino.addSpesa('AD', amount)
+            iva = line.split()[-2].replace(',', '.')
+            if not "%" in iva:
+                print("ERRORE: manca IVA! Salto importo", line)
+                continue
+            iva = 4.0 if iva == "4%" else 22.0
+            scontrino.addSpesa('AD', amount, iva)
 
 def __parse_fattura__(scontrino, lines):
 
@@ -124,7 +131,11 @@ def __parse_fattura__(scontrino, lines):
     it = iter(lines[start:end])
     for quantity, description, iva in zip(it, it, it):
         amount = description.split()[-1].replace(',', '.')
-        scontrino.addSpesa('AD', amount)
+        if not "%" in iva:
+                print("ERRORE: manca IVA! Salto importo", iva)
+                continue
+        val_iva = 4.0 if "4,00%" in iva else 22.0
+        scontrino.addSpesa('AD', amount, val_iva)
 
 # Olivetti's counter is bugged:
 #       if the machine is restarted, the counter of the day restart from 1 causing conflicts
