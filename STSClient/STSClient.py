@@ -10,7 +10,8 @@
 
 from argparse import ArgumentParser
 from libs import SOAP, Encrypter, Precompilata
-import time, ModuleManager
+import time, ModuleManager, xmlschema
+
 
 def printEsito(info):
     (nInviati, nAccolti, nWarnings, nErrori) = info
@@ -43,6 +44,11 @@ def send(user, password, pincode, cfInviante, pIva, cufficio, module, files_path
     doc730 = Precompilata.Schema730(cregione, casl, cssa, pIva, cfInviante)
     doc730.addSpese(documentiSpesa)
     xml = doc730.toXML(crypt)
+
+    print("Scontrini:", len(documentiSpesa))
+    print("Error:", xmlschema.XMLSchema("resources/730_precompilata.xsd").validate(xml))
+    #return
+
 
     ############ SEND SOAP CLIENT ##################
 

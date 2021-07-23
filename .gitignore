@@ -1,5 +1,8 @@
 kit730P*
 
+STSClient/ricevute/*
+!STSClient/ricevute/.keep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

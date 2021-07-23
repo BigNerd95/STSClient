@@ -38,9 +38,9 @@ class Receipt():
             '</idSpesa>'\
             '<dataPagamento>' + self._dataPagamento + '</dataPagamento>'\
             '<flagOperazione>' + self._flagOperazione + '</flagOperazione>'\
-            '<flagOpposizione>' + self._flagOpposizione + '</flagOpposizione>'\
+            '<cfCittadino>' + crypter.b64encrypt(self._cfCittadino) + '</cfCittadino>'\
             '<tipoDocumento>' + self._tipoDocumento + '</tipoDocumento>'\
-            '<cfCittadino>' + crypter.b64encrypt(self._cfCittadino) + '</cfCittadino>'
+            '<flagOpposizione>' + self._flagOpposizione + '</flagOpposizione>'
 
         for spesa in self._spese:
             xml += '<voceSpesa>'\

@@ -117,7 +117,7 @@ def __parse_fiscale__(scontrino, lines):
             if not "%" in iva:
                 print("ERRORE: manca IVA! Salto importo", line)
                 continue
-            iva = 4.0 if iva == "4%" else 22.0
+            iva = "4.00" if iva == "4%" else "22.00"
             scontrino.addSpesa('AD', amount, iva)
 
 def __parse_fattura__(scontrino, lines):
@@ -134,7 +134,7 @@ def __parse_fattura__(scontrino, lines):
         if not "%" in iva:
                 print("ERRORE: manca IVA! Salto importo", iva)
                 continue
-        val_iva = 4.0 if "4,00%" in iva else 22.0
+        val_iva = "4.00" if "4,00%" in iva else "22.00"
         scontrino.addSpesa('AD', amount, val_iva)
 
 # Olivetti's counter is bugged:
